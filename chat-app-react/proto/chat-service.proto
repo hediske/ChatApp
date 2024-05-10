@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package chat.grpc;
+
+import "google/protobuf/timestamp.proto";
+import "proto/chat-message.proto";
+
+service ChatService {
+    rpc join(User) returns (JoinResponse) {} // add user to the plateform
+    rpc joinChannel(JoinChannelRequest) returns (ChannelChat) {} //join a channel of two users and private channel
+    rpc connectToChannel(ConnectChannelRequest) returns (Empty){}
+    rpc disconnectToChannel(DisconnectChannelRequest) returns (Empty){}
+    rpc sendMsg(SendMessageRequest) returns (Empty) {}
+    rpc receiveMsg(ReceiveMessageRequest) returns (stream ChatMessage) {}
+    rpc stopReceiveMsg(StopReceiveMessageRequest) returns (Empty) {}
+    rpc getAllUsers(Empty) returns (stream User) {}
+    rpc getAllGroups(Empty) returns (stream Group) {}
+    rpc searchUser(SearchUserRequest) returns (stream User){}
+    rpc searchGroup(SearchGroupRequest) returns (stream Group){}
+    rpc getChannel(ChannelChat) returns (stream User){}
+  }

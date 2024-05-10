@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package chat.grpc;
+
+
+option java_package = "com.grpc.proto.Messaging";
+option java_multiple_files=true;
+
+import "google/protobuf/timestamp.proto";
+
+enum Channel_type{
+  USER = 0 ;
+  GROUP = 1;
+}
+
+enum Status {
+  UNKOWN = 0;
+  ONLINE = 1;
+  OFFLINE = 2;
+}
+
+enum Channel_STATUS{
+  PUBLIC = 0 ;
+  PRIVATE = 1;
+}
+
+message ChatMessage {
+  string messageId = 1;
+  string sender = 2;
+  string msg = 3;
+  google.protobuf.Timestamp  time = 4;
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+}
+
+message Group{
+  string id = 1;
+  string name = 2;
+}
+
+message ChannelChat{  // a user or a group
+  string id_Channel = 1;
+  Channel_type type_channel = 2;
+  Channel_STATUS status_channel = 3;
+  
+}
+
+message Empty {}
+
+message JoinResponse {
+  string id = 1;
+}
+
+message JoinChannelRequest{
+  User user1 = 1 ;
+  User user2 = 2 ;
+}
+
+message SendMessageRequest{
+  ChatMessage message = 1 ; 
+  ChannelChat channel =2 ;
+  User sender = 3;
+}
+
+message ReceiveMessageRequest{
+  ChannelChat channel =1 ;
+  User receiver = 2;
+}
+message StopReceiveMessageRequest{
+  ChannelChat channel =1 ;
+  User receiver = 2;
+}
+
+message MessageChannel{
+  ChannelChat channel = 1;
+  ChatMessage message = 2 ;
+}
+
+message Filter{
+  string Name=1;
+}
+
+
+message ConnectChannelRequest{
+  User user = 1;
+  ChannelChat channel = 2;
+}
+
+message DisconnectChannelRequest {
+  User user = 1;
+  ChannelChat channel = 2;
+ }
+
+
+ message BlockUserRequest{
+  string user_id = 1;
+ }
+
+message SearchGroupRequest{
+  Filter name = 1;
+}
+
+message SearchUserRequest{
+  Filter name = 1 ;
+}
+
+
