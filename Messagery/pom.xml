@@ -86,7 +86,7 @@
 						   <includeMavenTypes>direct</includeMavenTypes>
 							
 							<inputDirectories>
-								<include>src/main/java/com/grpc/proto</include>
+								<include>src/main/java/com/grpc/protoCompiled</include>
 							</inputDirectories>
 							
 							<outputTargets>

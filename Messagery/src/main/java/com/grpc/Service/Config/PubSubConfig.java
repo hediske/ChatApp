@@ -3,8 +3,8 @@ package com.grpc.Service.Config;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.grpc.Service.ChatStream;
-import com.grpc.proto.Messaging.ChatMessage;
-import com.grpc.proto.Messaging.User;
+import com.grpc.protoCompiled.Messaging.ChatMessage;
+import com.grpc.protoCompiled.Messaging.User;
 
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.RedisPubSubListener;

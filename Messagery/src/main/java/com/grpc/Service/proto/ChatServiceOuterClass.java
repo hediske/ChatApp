@@ -58,9 +58,9 @@ public final class ChatServiceOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.grpc.proto.Messaging.ChatMessageOuterClass.getDescriptor(),
+          com.grpc.protoCompiled.Messaging.ChatMessageOuterClass.getDescriptor(),
         }, assigner);
-    com.grpc.proto.Messaging.ChatMessageOuterClass.getDescriptor();
+    com.grpc.protoCompiled.Messaging.ChatMessageOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

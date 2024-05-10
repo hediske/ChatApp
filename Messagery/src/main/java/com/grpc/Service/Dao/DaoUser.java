@@ -14,10 +14,10 @@ import com.grpc.Service.ChatStream;
 import com.grpc.Service.Config.RedisConnection;
 import com.grpc.Service.Config.RedisConnectionHolder;
 import com.grpc.Service.Config.JSONConfig;
-import com.grpc.proto.Messaging.Filter;
-import com.grpc.proto.Messaging.Group;
-import com.grpc.proto.Messaging.Group.Builder;
-import com.grpc.proto.Messaging.User;
+import com.grpc.protoCompiled.Messaging.Filter;
+import com.grpc.protoCompiled.Messaging.Group;
+import com.grpc.protoCompiled.Messaging.Group.Builder;
+import com.grpc.protoCompiled.Messaging.User;
 
 import io.lettuce.core.api.async.RedisAsyncCommands;
 

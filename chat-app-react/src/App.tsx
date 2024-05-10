@@ -1,8 +1,8 @@
   import React ,{ useEffect, useState } from 'react';
   import logo from './logo.svg';
   import './App.css';
-  import { ChatServiceClient } from './proto/proto/Chat-serviceServiceClientPb';
-  import { User } from './proto/proto/chat-message_pb';
+  import { ChatServiceClient } from './protoCompiled/proto/Chat-serviceServiceClientPb';
+  import { User } from './protoCompiled/proto/chat-message_pb';
 
 
 function App(){

@@ -4,7 +4,7 @@
 
 // import com.grpc.Service.Sending.MessageWorker;
 // import com.grpc.Service.Sending.executorMessage;
-// import com.grpc.proto.Messaging.ChatMessage;
+// import com.grpc.protoCompiled.Messaging.ChatMessage;
 
 
 // public class sendingService {

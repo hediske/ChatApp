@@ -1,9 +1,9 @@
 package com.grpc.Service.Channel;
 
 
-import com.grpc.proto.Messaging.ChannelChat;
-import com.grpc.proto.Messaging.Channel_STATUS;
-import com.grpc.proto.Messaging.Channel_type;
+import com.grpc.protoCompiled.Messaging.ChannelChat;
+import com.grpc.protoCompiled.Messaging.Channel_STATUS;
+import com.grpc.protoCompiled.Messaging.Channel_type;
 
 public class ChannelFactImpl implements ChannelFactInt {
 

@@ -3,7 +3,7 @@ syntax = "proto3";
 package chat.grpc;
 
 
-option java_package = "com.grpc.proto.Messaging";
+option java_package = "com.grpc.protoCompiled.Messaging";
 option java_multiple_files=true;
 
 import "google/protobuf/timestamp.proto";

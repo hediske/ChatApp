@@ -3,7 +3,7 @@
     import java.util.Random;
     import java.util.UUID;
 
-    import com.grpc.proto.Messaging.User;
+    import com.grpc.protoCompiled.Messaging.User;
 
     public class Generator {
          private Random random = new Random();

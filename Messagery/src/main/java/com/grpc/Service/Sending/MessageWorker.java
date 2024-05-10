@@ -3,7 +3,7 @@ package com.grpc.Service.Sending;
 
 import com.google.protobuf.Timestamp;
 import com.grpc.Service.ChatStream;
-import com.grpc.proto.Messaging.ChatMessage;
+import com.grpc.protoCompiled.Messaging.ChatMessage;
 
 public class MessageWorker implements Comparable<MessageWorker>{
     private ChatMessage Message ; 

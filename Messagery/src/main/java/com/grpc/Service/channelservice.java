@@ -13,11 +13,11 @@ import com.grpc.Service.Channel.ChannelFactImpl;
 import com.grpc.Service.Config.PubSubConfig;
 import com.grpc.Service.Config.RedisConnectionHolder;
 import com.grpc.Service.Config.JSONConfig;
-import com.grpc.proto.Messaging.ChannelChat;
-import com.grpc.proto.Messaging.Channel_STATUS;
-import com.grpc.proto.Messaging.Channel_type;
-import com.grpc.proto.Messaging.ChatMessage;
-import com.grpc.proto.Messaging.User;
+import com.grpc.protoCompiled.Messaging.ChannelChat;
+import com.grpc.protoCompiled.Messaging.Channel_STATUS;
+import com.grpc.protoCompiled.Messaging.Channel_type;
+import com.grpc.protoCompiled.Messaging.ChatMessage;
+import com.grpc.protoCompiled.Messaging.User;
 
 import io.lettuce.core.api.async.RedisAsyncCommands;
 

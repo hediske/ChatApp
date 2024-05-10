@@ -2,9 +2,9 @@ package com.grpc.Service;
 
 import com.grpc.Exception.NonExistantException;
 import com.grpc.Service.Config.PubSubConfig;
-import com.grpc.proto.Messaging.ChannelChat;
-import com.grpc.proto.Messaging.ChatMessage;
-import com.grpc.proto.Messaging.User;
+import com.grpc.protoCompiled.Messaging.ChannelChat;
+import com.grpc.protoCompiled.Messaging.ChatMessage;
+import com.grpc.protoCompiled.Messaging.User;
 
 
 public class PubSubMessageService {
