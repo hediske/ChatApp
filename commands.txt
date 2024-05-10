@@ -1,0 +1,39 @@
+1- method : 
+npx create-react-app chat-app-react --template typescript
+
+cd chat-app-react
+npm install @types/protobufjs protobufjs ts-protoc-gen
+npm install  protobufjs 
+npm install  ts-protoc-gen
+
+add this to the package.json file
+{
+  "scripts": {
+    "generate-ts": "npx ts-protoc-gen --ts_out=. --proto_path=. *.proto"
+  }
+}
+
+npm run generate-ts
+
+2-method
+
+
+
+npx create-react-app chat-app-react --template typescript
+
+cd chat-app-react
+
+npm install google-protobuf grpc-web
+
+#!/bin/bash
+yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=proto/ proto/*.proto
+
+mkdir -p ./client/src/proto
+protoc -I=. ./proto/*.proto \
+  --js_out=import_style=commonjs:./client/src \
+  --grpc-web_out=import_style=typescript,mode=grpcwebtext:./client/src
+
+
+
+
+  
