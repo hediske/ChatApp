@@ -50,7 +50,7 @@ public class chatservice extends ChatServiceImplBase {
     @Override
     public void join (User user, StreamObserver<JoinResponse> responseObserver){
         UUID uuid;
-        if(user.getId()==null ||user.getId()==""){
+        if(user.getId()==null || user.getId()==""){
             uuid = UUID.randomUUID();
         }
         else{

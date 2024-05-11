@@ -1,6 +1,10 @@
 syntax = "proto3";
 
-package chatPackage;
+package chat.grpc;
+
+
+option java_package = "com.grpc.protoCompiled.Messaging";
+option java_multiple_files=true;
 
 import "google/protobuf/timestamp.proto";
 
@@ -30,8 +34,8 @@ message ChatMessage {
 message User {
   string id = 1;
   string name = 2;
-  string avatar = 3;
-  Status status = 4;
+  Status status = 3;
+  string avatar =4;
 }
 
 message Group{

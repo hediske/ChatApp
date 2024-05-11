@@ -3,7 +3,8 @@
     import java.util.Random;
     import java.util.UUID;
 
-    import com.grpc.protoCompiled.Messaging.User;
+import com.grpc.protoCompiled.Messaging.Status;
+import com.grpc.protoCompiled.Messaging.User;
 
     public class Generator {
          private Random random = new Random();
@@ -39,9 +40,13 @@
         public User newUser(){
             String name = generateName();
             String id = generateID();
+            Status status = Status.ONLINE;
+            String avatar = ""; 
             return User.newBuilder()
                 .setId(id)
                 .setName(name)
+                .setAvatar(avatar)
+                .setStatus(status)
                 .build();
         }
     }
