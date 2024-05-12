@@ -20,4 +20,7 @@ service ChatService {
     rpc searchUser(SearchUserRequest) returns (stream User){}
     rpc searchGroup(SearchGroupRequest) returns (stream Group){}
     rpc getChannel(ChannelChat) returns (stream User){}
+    rpc getConnectedChannel(User) returns (stream ChannelChat){} // mazelo
+    rpc setStatus(SetStatusRequest) returns (Empty){}// mazelo
+    rpc getStatus(User) returns (StatusResponse){}// mazelo
   }

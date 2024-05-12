@@ -4,7 +4,7 @@ import Typopgraphy from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import { IconButton, Tooltip } from "@material-ui/core";
-// import ImageGalleryDialog from "./ImageGallery";
+import ImageGalleryDialog from "./ImageGalleryDialog";
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -124,7 +124,7 @@ const Greeting: React.FC<Props> = (props) => {
           />
         </form>
       </Paper>
-      {/* <ImageGalleryDialog isOpen={open} onImageSelect={handleImageSelect} /> */}
+      <ImageGalleryDialog isOpen={open} onImageSelect={handleImageSelect} />
     </div>
   );
 };

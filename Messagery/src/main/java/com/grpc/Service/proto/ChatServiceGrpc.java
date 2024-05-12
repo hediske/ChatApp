@@ -411,6 +411,102 @@ public final class ChatServiceGrpc {
      return getGetChannelMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.User,
+      com.grpc.protoCompiled.Messaging.ChannelChat> getGetConnectedChannelMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "getConnectedChannel",
+      requestType = com.grpc.protoCompiled.Messaging.User.class,
+      responseType = com.grpc.protoCompiled.Messaging.ChannelChat.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.User,
+      com.grpc.protoCompiled.Messaging.ChannelChat> getGetConnectedChannelMethod() {
+    io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.User, com.grpc.protoCompiled.Messaging.ChannelChat> getGetConnectedChannelMethod;
+    if ((getGetConnectedChannelMethod = ChatServiceGrpc.getGetConnectedChannelMethod) == null) {
+      synchronized (ChatServiceGrpc.class) {
+        if ((getGetConnectedChannelMethod = ChatServiceGrpc.getGetConnectedChannelMethod) == null) {
+          ChatServiceGrpc.getGetConnectedChannelMethod = getGetConnectedChannelMethod = 
+              io.grpc.MethodDescriptor.<com.grpc.protoCompiled.Messaging.User, com.grpc.protoCompiled.Messaging.ChannelChat>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(
+                  "chat.grpc.ChatService", "getConnectedChannel"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.User.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.ChannelChat.getDefaultInstance()))
+                  .setSchemaDescriptor(new ChatServiceMethodDescriptorSupplier("getConnectedChannel"))
+                  .build();
+          }
+        }
+     }
+     return getGetConnectedChannelMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.SetStatusRequest,
+      com.grpc.protoCompiled.Messaging.Empty> getSetStatusMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "setStatus",
+      requestType = com.grpc.protoCompiled.Messaging.SetStatusRequest.class,
+      responseType = com.grpc.protoCompiled.Messaging.Empty.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.SetStatusRequest,
+      com.grpc.protoCompiled.Messaging.Empty> getSetStatusMethod() {
+    io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.SetStatusRequest, com.grpc.protoCompiled.Messaging.Empty> getSetStatusMethod;
+    if ((getSetStatusMethod = ChatServiceGrpc.getSetStatusMethod) == null) {
+      synchronized (ChatServiceGrpc.class) {
+        if ((getSetStatusMethod = ChatServiceGrpc.getSetStatusMethod) == null) {
+          ChatServiceGrpc.getSetStatusMethod = getSetStatusMethod = 
+              io.grpc.MethodDescriptor.<com.grpc.protoCompiled.Messaging.SetStatusRequest, com.grpc.protoCompiled.Messaging.Empty>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "chat.grpc.ChatService", "setStatus"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.SetStatusRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.Empty.getDefaultInstance()))
+                  .setSchemaDescriptor(new ChatServiceMethodDescriptorSupplier("setStatus"))
+                  .build();
+          }
+        }
+     }
+     return getSetStatusMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.User,
+      com.grpc.protoCompiled.Messaging.StatusResponse> getGetStatusMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "getStatus",
+      requestType = com.grpc.protoCompiled.Messaging.User.class,
+      responseType = com.grpc.protoCompiled.Messaging.StatusResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.User,
+      com.grpc.protoCompiled.Messaging.StatusResponse> getGetStatusMethod() {
+    io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.User, com.grpc.protoCompiled.Messaging.StatusResponse> getGetStatusMethod;
+    if ((getGetStatusMethod = ChatServiceGrpc.getGetStatusMethod) == null) {
+      synchronized (ChatServiceGrpc.class) {
+        if ((getGetStatusMethod = ChatServiceGrpc.getGetStatusMethod) == null) {
+          ChatServiceGrpc.getGetStatusMethod = getGetStatusMethod = 
+              io.grpc.MethodDescriptor.<com.grpc.protoCompiled.Messaging.User, com.grpc.protoCompiled.Messaging.StatusResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "chat.grpc.ChatService", "getStatus"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.User.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.StatusResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new ChatServiceMethodDescriptorSupplier("getStatus"))
+                  .build();
+          }
+        }
+     }
+     return getGetStatusMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -522,6 +618,27 @@ public final class ChatServiceGrpc {
       asyncUnimplementedUnaryCall(getGetChannelMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void getConnectedChannel(com.grpc.protoCompiled.Messaging.User request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.ChannelChat> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetConnectedChannelMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void setStatus(com.grpc.protoCompiled.Messaging.SetStatusRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.Empty> responseObserver) {
+      asyncUnimplementedUnaryCall(getSetStatusMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void getStatus(com.grpc.protoCompiled.Messaging.User request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.StatusResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetStatusMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -608,6 +725,27 @@ public final class ChatServiceGrpc {
                 com.grpc.protoCompiled.Messaging.ChannelChat,
                 com.grpc.protoCompiled.Messaging.User>(
                   this, METHODID_GET_CHANNEL)))
+          .addMethod(
+            getGetConnectedChannelMethod(),
+            asyncServerStreamingCall(
+              new MethodHandlers<
+                com.grpc.protoCompiled.Messaging.User,
+                com.grpc.protoCompiled.Messaging.ChannelChat>(
+                  this, METHODID_GET_CONNECTED_CHANNEL)))
+          .addMethod(
+            getSetStatusMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.protoCompiled.Messaging.SetStatusRequest,
+                com.grpc.protoCompiled.Messaging.Empty>(
+                  this, METHODID_SET_STATUS)))
+          .addMethod(
+            getGetStatusMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.protoCompiled.Messaging.User,
+                com.grpc.protoCompiled.Messaging.StatusResponse>(
+                  this, METHODID_GET_STATUS)))
           .build();
     }
   }
@@ -725,6 +863,30 @@ public final class ChatServiceGrpc {
       asyncServerStreamingCall(
           getChannel().newCall(getGetChannelMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getConnectedChannel(com.grpc.protoCompiled.Messaging.User request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.ChannelChat> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(getGetConnectedChannelMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void setStatus(com.grpc.protoCompiled.Messaging.SetStatusRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.Empty> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getSetStatusMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getStatus(com.grpc.protoCompiled.Messaging.User request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.StatusResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetStatusMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -834,6 +996,28 @@ public final class ChatServiceGrpc {
       return blockingServerStreamingCall(
           getChannel(), getGetChannelMethod(), getCallOptions(), request);
     }
+
+    /**
+     */
+    public java.util.Iterator<com.grpc.protoCompiled.Messaging.ChannelChat> getConnectedChannel(
+        com.grpc.protoCompiled.Messaging.User request) {
+      return blockingServerStreamingCall(
+          getChannel(), getGetConnectedChannelMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.grpc.protoCompiled.Messaging.Empty setStatus(com.grpc.protoCompiled.Messaging.SetStatusRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getSetStatusMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.grpc.protoCompiled.Messaging.StatusResponse getStatus(com.grpc.protoCompiled.Messaging.User request) {
+      return blockingUnaryCall(
+          getChannel(), getGetStatusMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -901,6 +1085,22 @@ public final class ChatServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getStopReceiveMsgMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.protoCompiled.Messaging.Empty> setStatus(
+        com.grpc.protoCompiled.Messaging.SetStatusRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getSetStatusMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.protoCompiled.Messaging.StatusResponse> getStatus(
+        com.grpc.protoCompiled.Messaging.User request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetStatusMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_JOIN = 0;
@@ -915,6 +1115,9 @@ public final class ChatServiceGrpc {
   private static final int METHODID_SEARCH_USER = 9;
   private static final int METHODID_SEARCH_GROUP = 10;
   private static final int METHODID_GET_CHANNEL = 11;
+  private static final int METHODID_GET_CONNECTED_CHANNEL = 12;
+  private static final int METHODID_SET_STATUS = 13;
+  private static final int METHODID_GET_STATUS = 14;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -980,6 +1183,18 @@ public final class ChatServiceGrpc {
         case METHODID_GET_CHANNEL:
           serviceImpl.getChannel((com.grpc.protoCompiled.Messaging.ChannelChat) request,
               (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.User>) responseObserver);
+          break;
+        case METHODID_GET_CONNECTED_CHANNEL:
+          serviceImpl.getConnectedChannel((com.grpc.protoCompiled.Messaging.User) request,
+              (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.ChannelChat>) responseObserver);
+          break;
+        case METHODID_SET_STATUS:
+          serviceImpl.setStatus((com.grpc.protoCompiled.Messaging.SetStatusRequest) request,
+              (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.Empty>) responseObserver);
+          break;
+        case METHODID_GET_STATUS:
+          serviceImpl.getStatus((com.grpc.protoCompiled.Messaging.User) request,
+              (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.StatusResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -1054,6 +1269,9 @@ public final class ChatServiceGrpc {
               .addMethod(getSearchUserMethod())
               .addMethod(getSearchGroupMethod())
               .addMethod(getGetChannelMethod())
+              .addMethod(getGetConnectedChannelMethod())
+              .addMethod(getSetStatusMethod())
+              .addMethod(getGetStatusMethod())
               .build();
         }
       }

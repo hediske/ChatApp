@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2),
+      height:'20vw',
+      width:'24vw',
+      borderRadius : "15px",
+      display : "flex",
+      flexDirection:"column",
+      justifyContent : "center",      
     },
   }));
 
@@ -30,7 +36,7 @@ const  CustomModal : React.FC<CustomNodeProps> = (props) => {
     const {open , handleClose, children} = props;
     return (
         <div>
-            <Modal
+            <Modal className={classes.modal}
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}

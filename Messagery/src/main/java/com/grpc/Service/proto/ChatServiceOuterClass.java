@@ -24,7 +24,7 @@ public final class ChatServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\022chat-service.proto\022\tchat.grpc\032\022chat-me" +
-      "ssage.proto2\247\006\n\013ChatService\0222\n\004join\022\017.ch" +
+      "ssage.proto2\344\007\n\013ChatService\0222\n\004join\022\017.ch" +
       "at.grpc.User\032\027.chat.grpc.JoinResponse\"\000\022" +
       "F\n\013joinChannel\022\035.chat.grpc.JoinChannelRe" +
       "quest\032\026.chat.grpc.ChannelChat\"\000\022H\n\020conne" +
@@ -44,8 +44,13 @@ public final class ChatServiceOuterClass {
       ".grpc.User\"\0000\001\022B\n\013searchGroup\022\035.chat.grp" +
       "c.SearchGroupRequest\032\020.chat.grpc.Group\"\000" +
       "0\001\0229\n\ngetChannel\022\026.chat.grpc.ChannelChat" +
-      "\032\017.chat.grpc.User\"\0000\001B\032\n\026com.grpc.Servic" +
-      "e.protoP\001b\006proto3"
+      "\032\017.chat.grpc.User\"\0000\001\022B\n\023getConnectedCha" +
+      "nnel\022\017.chat.grpc.User\032\026.chat.grpc.Channe" +
+      "lChat\"\0000\001\022<\n\tsetStatus\022\033.chat.grpc.SetSt" +
+      "atusRequest\032\020.chat.grpc.Empty\"\000\0229\n\tgetSt" +
+      "atus\022\017.chat.grpc.User\032\031.chat.grpc.Status" +
+      "Response\"\000B\032\n\026com.grpc.Service.protoP\001b\006" +
+      "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

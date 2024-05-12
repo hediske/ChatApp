@@ -45,7 +45,7 @@ static_resources:
       http2_protocol_options: {}
       lb_policy: round_robin
       load_assignment:
-        cluster_name: echo_service
+        cluster_name: chat_service
         endpoints:
           - lb_endpoints:
               - endpoint:

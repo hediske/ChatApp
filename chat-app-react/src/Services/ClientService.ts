@@ -1,15 +1,12 @@
-import { ChatServiceClient } from "../protoCompiled/Chat-serviceServiceClientPb";
-import { ChannelChat, ChatMessage, ConnectChannelRequest, DisconnectChannelRequest, Empty, Filter, JoinChannelRequest, ReceiveMessageRequest, SearchGroupRequest, SearchUserRequest, SendMessageRequest, StopReceiveMessageRequest, User } from "../protoCompiled/chat-message_pb";
+import { ChannelChat, ChatMessage,Status, ConnectChannelRequest, DisconnectChannelRequest, Empty, Filter, JoinChannelRequest, ReceiveMessageRequest, SearchGroupRequest, SearchUserRequest, SendMessageRequest, SetStatusRequest, StopReceiveMessageRequest, User } from "../protoCompiled/chat-message_pb";
 import { createMessage } from "./MessagesService";
-import { ClientReadableStream } from "@grpc/grpc-js";
-
+import { ChatServiceClient } from "../protoCompiled/Chat-serviceServiceClientPb";
 let Connection : ChatServiceClient | undefined = undefined;
 
 export const startConnection = ()=> {
     if(Connection !== undefined) return;
     console.log("starting connection");
     Connection = new ChatServiceClient('http://localhost:8000');
-
 }
 
 export const DisconnectServer = ()=> Connection = undefined;
@@ -17,12 +14,13 @@ export const DisconnectServer = ()=> Connection = undefined;
 
 export const joinUser = async (user:User) => {
     try{
+        console.log(user.getAvatar());
+        console.log(user.getStatus());
         const resp = await Connection!.join(user);
         console.log(resp);
         return resp;
     }
     catch(error : any){ 
-        console.log(error.code);
         //adding a mechanism to help the higher level know the type of the error and take action
         switch(error.code) {
             case 2 : 
@@ -45,9 +43,18 @@ export const joinUserByName = async (username:string) => {
 
 export const getAllUsers = async () => {
     const empty = new Empty();
-    const resp =  Connection!.getAllUsers(empty);
-    console.log(resp);
-    return resp;
+    try{
+        const resp =  Connection!.getAllUsers(empty);
+        console.log(resp);
+        return resp; 
+    } catch(error : any){ 
+        console.log("fama moshkla ")
+        if(error.code === 2) {
+            throw new Error ("Server is not running");
+        }
+        throw new Error("Internal error ! Something went wrong");
+    }
+    
 }
 
 export const getAllGroups = async () => {
@@ -131,6 +138,29 @@ export const StopReceiveMessage = async(user : User,channel : ChannelChat) =>{
     Request.setReceiver(user);
     Request.setChannel(channel);
     const resp = await Connection!.stopReceiveMsg(Request);
+    console.log(resp);
+    return resp;
+}
+
+
+export const getConnectedChannels = async (user:User) => {
+    const resp = Connection!.getConnectedChannel(user);
+    console.log(resp);
+    return resp;
+}
+
+export const setStatus = async (user : User , status : Status) => {
+    const req = new SetStatusRequest();
+    req.setStatus(status);
+    req.setUser(user);
+    const resp = await Connection!.setStatus(req);
+    console.log(resp);
+    return resp;
+}
+
+
+export const getStatus = async (user : User) => {
+    const resp = await Connection!.getStatus(user);
     console.log(resp);
     return resp;
 }

@@ -8,7 +8,6 @@
   import LoadingScreen from './Component/LoadingScreen';
 import CustomModal from './Component/CustomModal';
 
-startConnection();
 function App(){
   
 
@@ -18,7 +17,11 @@ function App(){
   const [popup,setPopup] = useState<boolean>(false);
   const [loading ,setLoading] = useState<boolean>(false);
   useEffect(()=>{
-    startConnection();
+    if(!user) return ;
+    
+  },[user]);
+  useEffect(()=>{
+    startConnection();    
   },[]);
 
   const handleClose : () => void = () => {
@@ -31,7 +34,12 @@ function App(){
   const handleUsernameAdding = ( name: string, avatar: string) => {
     console.log('name :>> ', name);
     console.log('avatar :>> ', avatar);
-    if(!name ) return ;
+    if(name === ""|| avatar==="") {
+      setTitle("ERROR ADDING THE USER");
+      setDescription("Please provide a username and an avatar to continue !");
+      setPopup(true);
+      return ;
+    }
     const newUser = new User();
     newUser.setName(name);
     newUser.setAvatar(avatar);
@@ -40,20 +48,18 @@ function App(){
     try {
       const resp: Promise<JoinResponse> = joinUser(newUser);
 
-      resp.then((res) => {
+      resp.then((res : JoinResponse) => {
         console.log(res);
         setLoading(false);
-        userHandler(newUser);
+        userHandler(newUser.setId(res.getId()));
       })
-          .catch((error) => {
+       .catch((error) => {
             console.log(error);
             setTitle("ERROR ADDING THE USER");
             setDescription(error.message);
             setLoading(false);
             setPopup(true);
-            
-          }); // Add a catch block to handle errors
-      
+          }); 
     } catch (error:any) {
       console.log(error.message);
     }
@@ -64,10 +70,10 @@ function App(){
       <div>
         <CustomModal open={popup} handleClose={handleClose}>
           <>
-            <title id="transition-modal-title">
+            <div className='modal-component'  id="transition-modal-title">
                 {title}
-            </title>
-            <p id="transition-modal-description">
+            </div>
+            <p className='modal-component' id="transition-modal-description">
                 {description}
             </p>
           </>
@@ -77,15 +83,20 @@ function App(){
       <div>
         {loading ? (
           <LoadingScreen />
-        ) : (
-          <>
-            {!user ? (
+        ) : null}
+        
+        {!user ? (
               <Greeting onUsernameEnter={handleUsernameAdding} />
             ) : (
-              <Chat />
-            )}
-          </>
+              <Chat 
+                handleTitle={setTitle}
+                handleDescription={setDescription} 
+                onPopup={handleOpen} onClose={handleClose} 
+                user={user} handleLoading ={setLoading} 
+                />
         )}
+          
+        
       </div>
     </div>
   );

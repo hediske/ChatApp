@@ -19,6 +19,8 @@ import com.grpc.protoCompiled.Messaging.ReceiveMessageRequest;
 import com.grpc.protoCompiled.Messaging.SearchGroupRequest;
 import com.grpc.protoCompiled.Messaging.SearchUserRequest;
 import com.grpc.protoCompiled.Messaging.SendMessageRequest;
+import com.grpc.protoCompiled.Messaging.SetStatusRequest;
+import com.grpc.protoCompiled.Messaging.StatusResponse;
 import com.grpc.protoCompiled.Messaging.StopReceiveMessageRequest;
 import com.grpc.protoCompiled.Messaging.User;
 import com.grpc.protoCompiled.Messaging.Empty;
@@ -50,6 +52,7 @@ public class chatservice extends ChatServiceImplBase {
     @Override
     public void join (User user, StreamObserver<JoinResponse> responseObserver){
         UUID uuid;
+        System.out.println(user);
         if(user.getId()==null || user.getId()==""){
             uuid = UUID.randomUUID();
         }
@@ -506,5 +509,71 @@ public class chatservice extends ChatServiceImplBase {
         return "private-"+sortedId[0]+"-"+sortedId[1];
     }
 
+    @Override
+    public void getConnectedChannel(User request , StreamObserver<ChannelChat> responseObserver){
+        User user = request;
+        try{
+        this.channelservice.getConnectedChannel(user, new ChatStream<ChannelChat>() {
+            @Override
+            public void send (ChannelChat channel){
+                logger.info("Channel  "+channel);
+                responseObserver.onNext(channel);
+            }
+        });}
+        catch(Exception e){
+            responseObserver.onError(
+                Status.INTERNAL
+                .withDescription(e.getMessage())
+                .asRuntimeException()
+            );
+            return;
+        }
+        responseObserver.onCompleted();
+        logger.info("search completed ..");
+    }
 
+
+    @Override
+    public void setStatus(SetStatusRequest request, StreamObserver<Empty> responseObserver){
+        User user = request.getUser() ;
+        com.grpc.protoCompiled.Messaging.Status status = request.getStatus();
+        if(user==null || status==null){
+            responseObserver.onError(
+                Status.INVALID_ARGUMENT
+                .withDescription("Please provide a valide user and Status")
+                .asRuntimeException()
+            );
+            return ;
+            
+        }
+        try{
+            daoUser.setStatus(user,status);
+        }
+        finally {
+            logger.info("User "+user.getName()+" set to "+status);
+        }
+    }
+
+    @Override
+    public void getStatus (User request, StreamObserver<StatusResponse> responseObserver){
+        User user =request ;
+        if(user==null){
+            responseObserver.onError(
+                Status.INVALID_ARGUMENT
+                .withDescription("Please provide a valid user")
+                .asRuntimeException()
+            );
+            return ;
+        }
+        com.grpc.protoCompiled.Messaging.Status status = null;
+        try{
+            status = daoUser.getStatus(user);
+            StatusResponse statusResponse = StatusResponse.newBuilder().setStatus(status).build();
+            responseObserver.onNext(statusResponse);
+        }
+        finally{
+            logger.info("User : "+user.getName()+" status : "+status);
+        }
+
+    }
 }

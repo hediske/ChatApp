@@ -118,12 +118,43 @@ public class channelservice {
         }
     }
 
-    public void addMessage(ChannelChat channel , ChatMessage message){
-        //TODO:add messaging 
+    public void getConnectedChannel(User user, ChatStream<ChannelChat> channels) throws NonExistantException{    
+        try{
+            redisCommands.keys(CONNECTED_MEMBERS_KEY_PREFIX+"*").get().forEach((k) -> {
+            try{
+                if(redisCommands.sismember(k,user.getId()).get()){
+                    String channelKey =  extractChannelKey(CONNECTED_MEMBERS_KEY_PREFIX,k);
+                    ChannelChat channel = findChannel(channelKey).get();
+                    channels.send(channel);
+                 }
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        });}
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void getMessageList(String channelId) throws NonExistantException{
-        // TODO: add all messages retrieve logic
+
+    // public void addMessage(ChannelChat channel , ChatMessage message){
+    //     //TODO:add messaging 
+    // }
+
+    // public void getMessageList(String channelId) throws NonExistantException{
+    //     // TODO: add all messages retrieve logic
+    // }
+
+    public String extractChannelKey (String str , String prefix){
+        if (str.startsWith(prefix)) {
+            String channelKey = str.substring(prefix.length());
+            channelKey = str.trim();
+            return channelKey;
+        } else {
+            throw new IllegalArgumentException("Invalid format for connected members key");
+        }
     }
+
 
 }

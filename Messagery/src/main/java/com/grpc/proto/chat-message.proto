@@ -7,7 +7,6 @@ option java_package = "com.grpc.protoCompiled.Messaging";
 option java_multiple_files=true;
 
 import "google/protobuf/timestamp.proto";
-
 enum Channel_type{
   USER = 0 ;
   GROUP = 1;
@@ -107,6 +106,13 @@ message SearchGroupRequest{
 
 message SearchUserRequest{
   Filter name = 1 ;
+}
+message SetStatusRequest{
+  User user = 1;
+  Status status = 2;
+}
+message StatusResponse{
+  Status status = 1 ;
 }
 
 

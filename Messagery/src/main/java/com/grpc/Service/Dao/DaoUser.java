@@ -16,6 +16,7 @@ import com.grpc.Service.Config.RedisConnectionHolder;
 import com.grpc.Service.Config.JSONConfig;
 import com.grpc.protoCompiled.Messaging.Filter;
 import com.grpc.protoCompiled.Messaging.Group;
+import com.grpc.protoCompiled.Messaging.Status;
 import com.grpc.protoCompiled.Messaging.Group.Builder;
 import com.grpc.protoCompiled.Messaging.User;
 
@@ -117,7 +118,32 @@ public class DaoUser implements DAO<User,Filter> {
                                           });
     }
 
+    public void setStatus(User user , Status status ){
+        try{
+            String userJson = RedisCommands.hget(KEY_USER+user.getId(),"data").get();
+            User.Builder builder = User.newBuilder();
+            JSONConfig.fromJson(userJson,builder);
+            User newUser = builder.setStatus(status).build();
+            RedisCommands.hset(KEY_USER+user.getId(),"data",JSONConfig.toJson(newUser));
+        }
+        catch(Exception e ){
+            e.printStackTrace();
+        }
+    }
 
+
+    public Status getStatus(User user){
+        try{
+            String userJson = RedisCommands.hget(KEY_USER+user.getId(),"data").get();
+            User.Builder builder = User.newBuilder();
+            JSONConfig.fromJson(userJson,builder);
+            User newUser = builder.build();
+            return newUser.getStatus();}
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
     
 }

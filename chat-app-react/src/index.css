@@ -10,3 +10,17 @@ code {
     monospace;
 }
 
+.modal-component{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#transition-modal-title{
+  font-size: 1.75vw;
+}
+#transition-modal-description{
+  font-size: 1vw;
+}
+
