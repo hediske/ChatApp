@@ -123,7 +123,8 @@ public class channelservice {
             redisCommands.keys(CONNECTED_MEMBERS_KEY_PREFIX+"*").get().forEach((k) -> {
             try{
                 if(redisCommands.sismember(k,user.getId()).get()){
-                    String channelKey =  extractChannelKey(CONNECTED_MEMBERS_KEY_PREFIX,k);
+                    String channelKey =  extractChannelKey(k,CONNECTED_MEMBERS_KEY_PREFIX);
+                    System.out.println("connected channel : "+channelKey);
                     ChannelChat channel = findChannel(channelKey).get();
                     channels.send(channel);
                  }
@@ -149,7 +150,6 @@ public class channelservice {
     public String extractChannelKey (String str , String prefix){
         if (str.startsWith(prefix)) {
             String channelKey = str.substring(prefix.length());
-            channelKey = str.trim();
             return channelKey;
         } else {
             throw new IllegalArgumentException("Invalid format for connected members key");

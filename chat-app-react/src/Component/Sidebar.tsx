@@ -46,7 +46,6 @@ const Sidebar : React.FC<propSideBar> = (props) => {
   const handleClick = (type: string) => {
     handleSidebar(type);
     setType(type);
-    console.log(type)
   } 
   
   return (

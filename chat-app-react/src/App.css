@@ -63,3 +63,11 @@
   height: 25px;
   width: 25px;
 }
+
+.button{
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Poppins' , 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5vw;
+  cursor: pointer;
+}

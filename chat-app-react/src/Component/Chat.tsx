@@ -1,8 +1,10 @@
 import React, { useEffect , useState } from "react";
-import { Status, User } from "../protoCompiled/chat-message_pb";
+import { ChannelChat, Status, User } from "../protoCompiled/chat-message_pb";
 import Sidebar from './Sidebar';
 import UserList from "./UserList";
-import { getAllUsers } from "../Services/ClientService";
+import { getAllUsers, getConnectedChannels, joinChannel } from "../Services/ClientService";
+import ChannelList from "./ChannelList";
+import CustomModal from './CustomModal';
 
 const style : { [key: string]: React.CSSProperties } =  {
     Container : {
@@ -49,6 +51,13 @@ const style : { [key: string]: React.CSSProperties } =  {
         fontSize : "1.5vw",
         color : "aliceblue",
 
+    },
+    ChatContainer : {
+        width : "100%",
+        height: "100%",
+        display : "flex",
+        flexDirection:"row"
+
     }
 }
 interface CustomProps {
@@ -66,9 +75,79 @@ const Chat : React.FC<CustomProps> = (props) => {
     const [main,setMain] = useState<string>('chat');
     const [message,setMessage] = useState<string>('');
     const [userlist , setUserList] = useState<User[]>([]);
+    const [channelList , setChannelList] = useState<ChannelChat[]>([]);
+    const [SelectedUser, changeUser ] = useState<User>();
+    const [SelectedChannel, changeChannel ] = useState<ChannelChat | undefined>(undefined);
+    const [showJoinDialog, setShowJoinDialog] = useState(false);
+
+
+
+    const onSelectUser =  (selected : User) => {
+        if(user.getId() !== selected.getId()) {
+            changeUser(selected);
+            setShowJoinDialog(true);
+        }
+    }
+
+    const onSelectChannel =  (selected : ChannelChat) => {
+            changeChannel(selected);
+    }
+
+    const handleJoinChannel = () => {
+        const resp : Promise<ChannelChat> = joinChannel(user, SelectedUser!);
+        resp.then((data : ChannelChat) => {
+            console.log(data);
+            handleTitle("Successfully joined channel !");
+            handleDescription("You are now connected to "+SelectedUser!.getName());
+            onPopup();
+        })
+        .catch((error) => {
+            console.log(error);
+            handleTitle("You Already joined the channel !");
+            handleDescription("You are already connected to User "+SelectedUser!.getName());
+            onPopup();
+
+        })
+        setShowJoinDialog(false);
+      };
+    
+      const handleCloseDialog = () => {
+        setShowJoinDialog(false);
+      };
+
 
     useEffect(() => {
         setMessage("")
+
+        if(main=='chat'){
+            handleLoading(true);
+            getConnectedChannels(user).then((resp) => {
+                const channels : ChannelChat[] = [];
+                resp.on("error",(error) => {
+                    handleTitle("ERROR FETCHING CHANNELS");
+                    handleDescription("Internal error : Something went wrong")
+                    onPopup();
+                    setMessage("No Channel was Found")
+                    handleLoading(false);
+                });
+                resp.on("end", () => {
+                    setChannelList(channels);
+                    handleLoading(false);
+
+                })
+                resp.on("data", (data) => {
+                    const channel = new ChannelChat();
+                    channel.setIdChannel(data.getIdChannel());
+                    channel.setStatusChannel(data.getStatusChannel());
+                    channel.setTypeChannel(data.getTypeChannel());
+                    channels.push(channel);
+                });      
+            })
+            if(channelList.length === 0) 
+                setMessage("You are not connected to any channel ! Go and join one !")
+
+
+        }
 
         if(main === 'users') {
             handleLoading(true);
@@ -81,18 +160,19 @@ const Chat : React.FC<CustomProps> = (props) => {
                         setMessage("No User was Found")
                         handleLoading(false);
                     });
-                    resp.on("data", (data) => {
+                    resp.on("end", () => {
+                        setUserList(users);
                         handleLoading(false);
+
+                    })
+                    resp.on("data", (data) => {
                         const user = new User();
                         user.setId(data.getId());
                         user.setName(data.getName());
                         user.setAvatar(data.getAvatar());
                         user.setStatus(data.getStatus());
                         users.push(user);
-
-
                     });      
-                    setUserList(users);
                 })
             
 
@@ -107,6 +187,13 @@ const Chat : React.FC<CustomProps> = (props) => {
     return (            
         <div style={style.root}>
             <div style={style.Container}>
+                <CustomModal open={showJoinDialog} handleClose={handleCloseDialog} handleConfirm={handleJoinChannel}>
+                <>
+                    <div className='modal-component' id="transition-modal-title">
+                        Do you want to join this channel with {SelectedUser?.getName()} ?
+                    </div>
+                </>
+                </CustomModal>  
                 <Sidebar handleSidebar= {handleSideBar}></Sidebar>
                 <div style={style.MainContainer}> 
                     <div style={style.MainHeader}>
@@ -118,10 +205,17 @@ const Chat : React.FC<CustomProps> = (props) => {
                         </div>
                     </div>
                     {main === 'chat' ? 
-                        <UserList size={"30%"} userList={[user]} Message={"No User is connected"} ></UserList>
+                        <div style={style.ChatContainer}>
+                            <ChannelList onSelectChannel={onSelectChannel}  size={channelList.length === 0 ? "100%" :"40%"} channelList={channelList} Message={message} ></ChannelList>
+                            {SelectedChannel!==undefined && 
+                                    <div style={{width : "100%"}}> 
+                                    {SelectedChannel.getIdChannel()}
+                                    </div>
+                            }
+                        </div>
                         : main === 'group' ? 
                             <div>Group</div> 
-                                : <UserList size={"100%"} userList={userlist} Message={message}></UserList>}
+                                : <UserList onSelectUser={onSelectUser}  size={"100%"} userList={userlist} Message={message}></UserList>}
                 </div>
             </div>
 

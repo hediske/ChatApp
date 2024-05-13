@@ -14,8 +14,7 @@ export const DisconnectServer = ()=> Connection = undefined;
 
 export const joinUser = async (user:User) => {
     try{
-        console.log(user.getAvatar());
-        console.log(user.getStatus());
+        console.log(user);
         const resp = await Connection!.join(user);
         console.log(resp);
         return resp;

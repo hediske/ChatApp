@@ -7,6 +7,7 @@ interface CustomNodeProps {
     open : boolean;
     handleClose : () => void;
     children : React.ReactNode;
+    handleConfirm ?: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,9 @@ const  CustomModal : React.FC<CustomNodeProps> = (props) => {
                 closeAfterTransition
             >
                 <Fade in={open}>
-                    <Paper className={classes.paper}>{children}</Paper>
+                    <Paper className={classes.paper}>{children}
+                        {props.handleConfirm && <button className="button" onClick={props.handleConfirm}>Confirm</button>}
+                    </Paper>
                 </Fade>
 
             </Modal>

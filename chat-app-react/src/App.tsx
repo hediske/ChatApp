@@ -32,8 +32,6 @@ function App(){
     setPopup(true);
   }
   const handleUsernameAdding = ( name: string, avatar: string) => {
-    console.log('name :>> ', name);
-    console.log('avatar :>> ', avatar);
     if(name === ""|| avatar==="") {
       setTitle("ERROR ADDING THE USER");
       setDescription("Please provide a username and an avatar to continue !");
@@ -49,12 +47,10 @@ function App(){
       const resp: Promise<JoinResponse> = joinUser(newUser);
 
       resp.then((res : JoinResponse) => {
-        console.log(res);
         setLoading(false);
         userHandler(newUser.setId(res.getId()));
       })
        .catch((error) => {
-            console.log(error);
             setTitle("ERROR ADDING THE USER");
             setDescription(error.message);
             setLoading(false);
