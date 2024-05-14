@@ -1,4 +1,4 @@
-# Chat App - A Platform for real time messaging using React , GRRc , Envoy Proxy , Docker and Redis DB
+# Chat App - A Platform for real time messaging using React , GRRC ,JAVA , Envoy Proxy , Docker and Redis DB
 
 ## Technologies:
 - React 
