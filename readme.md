@@ -15,7 +15,7 @@
 - Protoc installed in your PATH to compile frontend proto files
 
 ## Features 
-### To check the whole features you can check here. [LINK](https://https://github.com/hediske/ChatApp/blob/main/Messagery/Readme.md)
+### To check the whole features you can check here. [LINK](/Messagery/Readme.md)
 
 ## How it works
 - FrontEnd :
