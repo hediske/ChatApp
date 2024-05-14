@@ -11,7 +11,7 @@ interface UserListProps {
 const UserList: React.FC<UserListProps> = (props) => {
     const { userList, size ,Message , onSelectUser } = props;
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: size , borderRadius : '10px' ,border:"1px solid black" ,height : '100%' , backgroundColor : '#D3D3D3'}}>
+        <div style={{ display: 'flex', overflow:"auto" , flexDirection: 'column', alignItems: 'center', width: size , borderRadius : '10px' ,border:"1px solid black" ,height : '100%' , backgroundColor : '#D3D3D3'}}>
             {(userList.length === 0) ? 
                 <h1 style={{marginTop : '30px'}}>{Message}</h1> : null
             }

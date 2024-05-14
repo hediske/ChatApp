@@ -71,3 +71,17 @@
   font-size: 1.5vw;
   cursor: pointer;
 }
+
+.mine{
+  background-color: lightblue ! important;
+}
+.notmine{
+  background-color: lightgoldenrodyellow ! important;
+}
+
+.mineMsg{
+  align-self: flex-end ! important;
+}
+.notmineMsg{
+  align-self: flex-start ! important;
+}

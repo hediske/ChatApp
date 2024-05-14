@@ -110,4 +110,9 @@ message SetStatusRequest{
 message StatusResponse{
   Status status = 1 ;
 }
-
+message FindUserRequest{
+  string id = 1;
+}
+message FindGroupRequest{
+  string id = 1;
+}

@@ -24,7 +24,7 @@ public final class ChatServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\022chat-service.proto\022\tchat.grpc\032\022chat-me" +
-      "ssage.proto2\344\007\n\013ChatService\0222\n\004join\022\017.ch" +
+      "ssage.proto2\335\010\n\013ChatService\0222\n\004join\022\017.ch" +
       "at.grpc.User\032\027.chat.grpc.JoinResponse\"\000\022" +
       "F\n\013joinChannel\022\035.chat.grpc.JoinChannelRe" +
       "quest\032\026.chat.grpc.ChannelChat\"\000\022H\n\020conne" +
@@ -49,8 +49,11 @@ public final class ChatServiceOuterClass {
       "lChat\"\0000\001\022<\n\tsetStatus\022\033.chat.grpc.SetSt" +
       "atusRequest\032\020.chat.grpc.Empty\"\000\0229\n\tgetSt" +
       "atus\022\017.chat.grpc.User\032\031.chat.grpc.Status" +
-      "Response\"\000B\032\n\026com.grpc.Service.protoP\001b\006" +
-      "proto3"
+      "Response\"\000\0229\n\010findUser\022\032.chat.grpc.FindU" +
+      "serRequest\032\017.chat.grpc.User\"\000\022<\n\tfindGro" +
+      "up\022\033.chat.grpc.FindGroupRequest\032\020.chat.g" +
+      "rpc.Group\"\000B\032\n\026com.grpc.Service.protoP\001b" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

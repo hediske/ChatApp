@@ -10,7 +10,6 @@ import com.grpc.Exception.AlreadyExistsException;
 import com.grpc.Exception.NoRightGivenException;
 import com.grpc.Exception.NonExistantException;
 import com.grpc.Service.Channel.ChannelFactImpl;
-import com.grpc.Service.Config.PubSubConfig;
 import com.grpc.Service.Config.RedisConnectionHolder;
 import com.grpc.Service.Config.JSONConfig;
 import com.grpc.protoCompiled.Messaging.ChannelChat;
@@ -104,7 +103,10 @@ public class channelservice {
 
     public boolean checkIsAuthorizedToSend(User sender, ChannelChat channel) throws InterruptedException, ExecutionException {
         if((sender !=null) && ( channel !=null)){
-            return redisCommands.sismember(CONNECTED_MEMBERS_KEY_PREFIX+channel.getIdChannel(),sender.getId()).get();
+            System.out.println("key  : "+CONNECTED_MEMBERS_KEY_PREFIX+channel.getIdChannel() + "   user  : " +sender.getId());
+            boolean result = redisCommands.sismember(CONNECTED_MEMBERS_KEY_PREFIX+channel.getIdChannel(),sender.getId()).get();
+            System.out.println("authorized  : "  +result);
+            return result;
         }
         return false;
     }

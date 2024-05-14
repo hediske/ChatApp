@@ -12,13 +12,11 @@ import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 
 public class PubSubConfig {
-    private  RedisClient redisClient = RedisConnectionHolder.Instance.getClient();
-    private  StatefulRedisPubSubConnection<String, String> pubsubConnection ;
-    private  static RedisPubSubAsyncCommands<String, String> async;
+    private  static RedisClient redisClient = RedisConnectionHolder.Instance.getClient();
+    private static  StatefulRedisPubSubConnection<String, String> pubsubConnection = redisClient.connectPubSub();;
+    private  static RedisPubSubAsyncCommands<String, String> async = pubsubConnection.async();;
 
     public PubSubConfig(User user,ChatStream<ChatMessage> streamToSend){
-         pubsubConnection = redisClient.connectPubSub();
-         async= pubsubConnection.async();
          pubsubConnection.addListener(new  RedisPubSubListener<String,String>() {
             @Override
             public void message(String channel, String message) {

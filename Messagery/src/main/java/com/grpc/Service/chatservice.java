@@ -25,6 +25,8 @@ import com.grpc.protoCompiled.Messaging.StopReceiveMessageRequest;
 import com.grpc.protoCompiled.Messaging.User;
 import com.grpc.protoCompiled.Messaging.Empty;
 import com.grpc.protoCompiled.Messaging.Filter;
+import com.grpc.protoCompiled.Messaging.FindGroupRequest;
+import com.grpc.protoCompiled.Messaging.FindUserRequest;
 import com.grpc.protoCompiled.Messaging.Group;
 import com.grpc.protoCompiled.Messaging.JoinChannelRequest;
 import com.grpc.Service.Dao.DaoGroup;
@@ -506,7 +508,7 @@ public class chatservice extends ChatServiceImplBase {
         String id2 =user2.getId();
         String[] sortedId ={id1,id2} ;
         Arrays.sort(sortedId);       
-        return "private-"+sortedId[0]+"-"+sortedId[1];
+        return "private:"+sortedId[0]+":"+sortedId[1];
     }
 
     @Override
@@ -576,4 +578,77 @@ public class chatservice extends ChatServiceImplBase {
         }
 
     }
+
+    @Override 
+    public void findUser(FindUserRequest request, StreamObserver<User> responseObserver){
+        String id = request.getId();
+        if(id==null){
+            responseObserver.onError(
+                Status.INVALID_ARGUMENT
+                .withDescription("Please provide a valid user")
+                .asRuntimeException()
+            );
+            return ;    
+        }
+        try{
+            Optional<User> search = daoUser.find(id);
+            if(search.isEmpty()){
+                responseObserver.onError(
+                    Status.NOT_FOUND
+                    .withDescription("User not found")
+                    .asRuntimeException()
+                );
+                return;
+            };
+            User user = search.get();
+            logger.info("User found : "+user);
+            responseObserver.onNext(user);
+            responseObserver.onCompleted();
+        }catch(Exception e){ 
+            responseObserver.onError(
+                Status.INTERNAL
+                .withDescription(e.getMessage())
+                .asRuntimeException()
+            );
+            return; 
+        }
+    }
+
+
+
+    @Override 
+    public void findGroup(FindGroupRequest request, StreamObserver<Group> responseObserver){
+        String id = request.getId();
+        if(id==null){
+            responseObserver.onError(
+                Status.INVALID_ARGUMENT
+                .withDescription("Please provide a valid group")
+                .asRuntimeException()
+            );
+            return ;    
+        }
+        try{
+            Optional<Group> search = daoGroup.find(id);
+            if(search.isEmpty()){
+                responseObserver.onError(
+                    Status.NOT_FOUND
+                    .withDescription("Group not found")
+                    .asRuntimeException()
+                );
+                return;
+            };
+            Group group = search.get();
+            logger.info("Group found : "+group);
+            responseObserver.onNext(group);
+            responseObserver.onCompleted();
+        }catch(Exception e){ 
+            responseObserver.onError(
+                Status.INTERNAL
+                .withDescription(e.getMessage())
+                .asRuntimeException()
+            );
+            return; 
+        }
+    }
+
 }

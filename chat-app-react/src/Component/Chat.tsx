@@ -1,11 +1,23 @@
 import React, { useEffect , useState } from "react";
-import { ChannelChat, Status, User } from "../protoCompiled/chat-message_pb";
+import { ChannelChat, ChatMessage, Status, User } from "../protoCompiled/chat-message_pb";
 import Sidebar from './Sidebar';
 import UserList from "./UserList";
-import { getAllUsers, getConnectedChannels, joinChannel } from "../Services/ClientService";
+import { ReceiveMessage, StopReceiveMessage, getAllUsers, getConnectedChannels, joinChannel, sendMessage } from "../Services/ClientService";
 import ChannelList from "./ChannelList";
 import CustomModal from './CustomModal';
+import { Button, TextField, makeStyles } from "@material-ui/core";
+import { ClientReadableStream } from "grpc-web";
+import MessageList from "./MessageList";
 
+
+const useStyles = makeStyles({
+    customInputBase: {
+      height :"100%",
+      
+    },
+  });
+
+  
 const style : { [key: string]: React.CSSProperties } =  {
     Container : {
         display : "flex",
@@ -58,6 +70,18 @@ const style : { [key: string]: React.CSSProperties } =  {
         display : "flex",
         flexDirection:"row"
 
+    },
+    MessagingContainer :{
+        width : "100%",
+        height: "100%",
+        display : "flex",
+        flexDirection:"column",
+        borderRadius : "10px",
+        background :  "grey",
+        marginLeft : '15px',
+        paddingLeft : '15px',
+        paddingRight : '15px',
+        gap:"10px"
     }
 }
 interface CustomProps {
@@ -69,6 +93,7 @@ interface CustomProps {
      handleLoading : React.Dispatch<React.SetStateAction<boolean>> ;
 
 }
+const messageList : Map<string,ChatMessage[]> = new Map();
 const Chat : React.FC<CustomProps> = (props) => {
 
     const {handleTitle, handleDescription, onPopup, onClose, user, handleLoading} = props;
@@ -78,9 +103,14 @@ const Chat : React.FC<CustomProps> = (props) => {
     const [channelList , setChannelList] = useState<ChannelChat[]>([]);
     const [SelectedUser, changeUser ] = useState<User>();
     const [SelectedChannel, changeChannel ] = useState<ChannelChat | undefined>(undefined);
+    const [SelectedAvatar, changeAvatar ] = useState<string | undefined>(undefined);
+    const [SelectedName, changeName ] = useState<String | undefined>('');
+    const [SelectedChannelStream, changeChannelStream ] = useState<Promise<ClientReadableStream<ChatMessage>> | undefined>(undefined);
     const [showJoinDialog, setShowJoinDialog] = useState(false);
-
-
+    const [textFieldValue, setTextFieldValue] = useState('');
+    const [messageListValue, setMessageListValue] = useState<ChatMessage[] | undefined>(undefined);
+    const [latestMessage, setLatestMessage] = useState<number>();
+    const classes = useStyles();
 
     const onSelectUser =  (selected : User) => {
         if(user.getId() !== selected.getId()) {
@@ -89,9 +119,17 @@ const Chat : React.FC<CustomProps> = (props) => {
         }
     }
 
-    const onSelectChannel =  (selected : ChannelChat) => {
+    const onSelectChannel =  (selected : ChannelChat , name : Map<string,string>, avatar : Map<string,string>) => {
+            // if(selected !== undefined)     StopReceiveMessage(user ,selected);
             changeChannel(selected);
+            changeName(name.get(selected.getIdChannel()));
+            changeAvatar(avatar.get(selected.getIdChannel()));
+            const  resp = ReceiveMessage(selected,user);
+            changeChannelStream(resp);
+
     }
+
+
 
     const handleJoinChannel = () => {
         const resp : Promise<ChannelChat> = joinChannel(user, SelectedUser!);
@@ -115,11 +153,46 @@ const Chat : React.FC<CustomProps> = (props) => {
         setShowJoinDialog(false);
       };
 
+      // Here we are using the useEffect hook to listen to the SelectedChannelStream when it changes.
+      // The SelectedChannelStream is a Promise that resolves to a ClientReadableStream<ChatMessage>.
+      // The ClientReadableStream<ChatMessage> is a stream that emits data events whenever a new message is received.
+      // So, we can use the then method to get the actual stream and then listen to the data events.
+      // The data event contains the message object that contains the sender and the message.
+      // We can log each message received and listen to every message.
+      useEffect(()=>{
+        SelectedChannelStream?.then((stream : ClientReadableStream<ChatMessage>) => {
+          console.log("started listening to channel");
+          stream.on("error", (error) => {
+              console.log('errrorrrr : '+error);
+              handleTitle("ERROR FETCHING MESSAGES");
+              handleDescription("Internal error : Something went wrong");
+              onPopup();
+          })
+          stream.on("data", (data) => {
+            console.log("sender: " + data.getSender() + " message: " + data.getMsg());
+            console.log("taille inititale : "+ messageList.size);
+            const key = SelectedChannel!.getIdChannel();
+            if(messageList.has(key)) {
+                messageList.get(key)?.push(data);
+            }else {
+                messageList.set(SelectedChannel!.getIdChannel(), [data]);
+            }
+            console.log("taille après ajout du clonage : "+ messageList.size);
+            setMessageListValue(messageList.get(key));
+            setLatestMessage(data.getTime()?.getSeconds());
+          });
+        });
+      },[SelectedChannelStream]);
+
+
 
     useEffect(() => {
         setMessage("")
 
         if(main=='chat'){
+            if(SelectedChannel !== undefined) {
+                //TODO:
+            }
             handleLoading(true);
             getConnectedChannels(user).then((resp) => {
                 const channels : ChannelChat[] = [];
@@ -184,6 +257,28 @@ const Chat : React.FC<CustomProps> = (props) => {
         setMain(str);
     }
 
+    const handleTextFieldChange = (event : React.ChangeEvent<HTMLInputElement>) => {
+        setTextFieldValue(event.target.value);
+    }
+
+    const handleSendMessage = () => {
+        if(SelectedChannel !== undefined && textFieldValue !== '') {
+            try{
+            sendMessage(user, SelectedChannel, textFieldValue).catch(
+                error =>    {
+                    console.log(error);
+                    handleTitle("ERROR SENDING MESSAGE");
+                    handleDescription(error.message);
+                    onPopup();
+                }
+            );}
+            catch(error){
+                console.log("a problem")
+            }
+            setTextFieldValue('');            
+        }
+    }
+
     return (            
         <div style={style.root}>
             <div style={style.Container}>
@@ -206,15 +301,52 @@ const Chat : React.FC<CustomProps> = (props) => {
                     </div>
                     {main === 'chat' ? 
                         <div style={style.ChatContainer}>
-                            <ChannelList onSelectChannel={onSelectChannel}  size={channelList.length === 0 ? "100%" :"40%"} channelList={channelList} Message={message} ></ChannelList>
+                            <ChannelList onSelectChannel={onSelectChannel}  size={channelList.length === 0 ? "100%" :"40%"} channelList={channelList} userid={user.getId()} Message={message} ></ChannelList>
                             {SelectedChannel!==undefined && 
-                                    <div style={{width : "100%"}}> 
-                                    {SelectedChannel.getIdChannel()}
+                                    <div style={style.MessagingContainer}> 
+                                        <div style={{width : "inherits" , paddingLeft : "6%", height:"10%" , background :" #121212" , borderRadius:"10px"  , display:"flex" ,  alignItems:"center" , color: "aqua" , fontSize:'3rem' , fontWeight:"bold"}}>
+                                            {SelectedAvatar ? <img style={{ marginRight:"20%",height:"80px" , width : "80px" , borderRadius:"50% "}} src={SelectedAvatar}></img> : <></> }
+                                            <span style = {{fontSize : "2rem"}}>  CHANNEL  </span>
+                                            {"  : " +SelectedName}
+                                        </div>
+                                        <div style = {{width: "100%" , flex : "1" , background:"#F0F8FF", borderRadius:"10px"}}>
+                                            {/* {messageList.get(SelectedChannel.getIdChannel())?.map((message : ChatMessage) => (
+                                                   <> {message.getMsg()} </>
+                                            ))}                                             */}
+                                        <MessageList key={latestMessage} messageList={messageListValue} user ={user}></MessageList>
+
+                                        </div>
+                                        <div style = {{width: "100%" , color:"aliceblue", height:"10%" , background:"#06062c", borderRadius:"10px" , display:"flex" ,flexDirection :"row"}}>
+                                            <TextField classes={{ root: classes.customInputBase }}
+                                            value={textFieldValue}
+                                            onChange={handleTextFieldChange}
+
+                                            fullWidth
+                                            InputLabelProps={{
+                                                style: {
+                                                  color: "aliceblue",
+                                                  fontFamily : "Poppins",
+                                                },
+                                              }}
+                                              InputProps={{
+                                                style: {
+                                                  color: "aliceblue",
+                                                  height:"100%",
+                                                  fontFamily : "Poppins",
+                                                  fontSize : "2vh",
+                                                  paddingLeft:"10px"
+                                  
+                                                },
+                                              }}
+                                  
+                                            />
+                                            <Button onClick={handleSendMessage} variant="contained" color="primary">Send</Button>
+                                        </div>
                                     </div>
                             }
                         </div>
                         : main === 'group' ? 
-                            <div>Group</div> 
+                            <div style={{fontSize:"2rem"}}>"Service not available ! to add in V2"</div> 
                                 : <UserList onSelectUser={onSelectUser}  size={"100%"} userList={userlist} Message={message}></UserList>}
                 </div>
             </div>

@@ -507,6 +507,70 @@ public final class ChatServiceGrpc {
      return getGetStatusMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.FindUserRequest,
+      com.grpc.protoCompiled.Messaging.User> getFindUserMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "findUser",
+      requestType = com.grpc.protoCompiled.Messaging.FindUserRequest.class,
+      responseType = com.grpc.protoCompiled.Messaging.User.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.FindUserRequest,
+      com.grpc.protoCompiled.Messaging.User> getFindUserMethod() {
+    io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.FindUserRequest, com.grpc.protoCompiled.Messaging.User> getFindUserMethod;
+    if ((getFindUserMethod = ChatServiceGrpc.getFindUserMethod) == null) {
+      synchronized (ChatServiceGrpc.class) {
+        if ((getFindUserMethod = ChatServiceGrpc.getFindUserMethod) == null) {
+          ChatServiceGrpc.getFindUserMethod = getFindUserMethod = 
+              io.grpc.MethodDescriptor.<com.grpc.protoCompiled.Messaging.FindUserRequest, com.grpc.protoCompiled.Messaging.User>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "chat.grpc.ChatService", "findUser"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.FindUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.User.getDefaultInstance()))
+                  .setSchemaDescriptor(new ChatServiceMethodDescriptorSupplier("findUser"))
+                  .build();
+          }
+        }
+     }
+     return getFindUserMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.FindGroupRequest,
+      com.grpc.protoCompiled.Messaging.Group> getFindGroupMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "findGroup",
+      requestType = com.grpc.protoCompiled.Messaging.FindGroupRequest.class,
+      responseType = com.grpc.protoCompiled.Messaging.Group.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.FindGroupRequest,
+      com.grpc.protoCompiled.Messaging.Group> getFindGroupMethod() {
+    io.grpc.MethodDescriptor<com.grpc.protoCompiled.Messaging.FindGroupRequest, com.grpc.protoCompiled.Messaging.Group> getFindGroupMethod;
+    if ((getFindGroupMethod = ChatServiceGrpc.getFindGroupMethod) == null) {
+      synchronized (ChatServiceGrpc.class) {
+        if ((getFindGroupMethod = ChatServiceGrpc.getFindGroupMethod) == null) {
+          ChatServiceGrpc.getFindGroupMethod = getFindGroupMethod = 
+              io.grpc.MethodDescriptor.<com.grpc.protoCompiled.Messaging.FindGroupRequest, com.grpc.protoCompiled.Messaging.Group>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "chat.grpc.ChatService", "findGroup"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.FindGroupRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.grpc.protoCompiled.Messaging.Group.getDefaultInstance()))
+                  .setSchemaDescriptor(new ChatServiceMethodDescriptorSupplier("findGroup"))
+                  .build();
+          }
+        }
+     }
+     return getFindGroupMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -639,6 +703,20 @@ public final class ChatServiceGrpc {
       asyncUnimplementedUnaryCall(getGetStatusMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void findUser(com.grpc.protoCompiled.Messaging.FindUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.User> responseObserver) {
+      asyncUnimplementedUnaryCall(getFindUserMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void findGroup(com.grpc.protoCompiled.Messaging.FindGroupRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.Group> responseObserver) {
+      asyncUnimplementedUnaryCall(getFindGroupMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -746,6 +824,20 @@ public final class ChatServiceGrpc {
                 com.grpc.protoCompiled.Messaging.User,
                 com.grpc.protoCompiled.Messaging.StatusResponse>(
                   this, METHODID_GET_STATUS)))
+          .addMethod(
+            getFindUserMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.protoCompiled.Messaging.FindUserRequest,
+                com.grpc.protoCompiled.Messaging.User>(
+                  this, METHODID_FIND_USER)))
+          .addMethod(
+            getFindGroupMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.grpc.protoCompiled.Messaging.FindGroupRequest,
+                com.grpc.protoCompiled.Messaging.Group>(
+                  this, METHODID_FIND_GROUP)))
           .build();
     }
   }
@@ -887,6 +979,22 @@ public final class ChatServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(getGetStatusMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void findUser(com.grpc.protoCompiled.Messaging.FindUserRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.User> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getFindUserMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void findGroup(com.grpc.protoCompiled.Messaging.FindGroupRequest request,
+        io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.Group> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getFindGroupMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -1018,6 +1126,20 @@ public final class ChatServiceGrpc {
       return blockingUnaryCall(
           getChannel(), getGetStatusMethod(), getCallOptions(), request);
     }
+
+    /**
+     */
+    public com.grpc.protoCompiled.Messaging.User findUser(com.grpc.protoCompiled.Messaging.FindUserRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getFindUserMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.grpc.protoCompiled.Messaging.Group findGroup(com.grpc.protoCompiled.Messaging.FindGroupRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getFindGroupMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -1101,6 +1223,22 @@ public final class ChatServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getGetStatusMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.protoCompiled.Messaging.User> findUser(
+        com.grpc.protoCompiled.Messaging.FindUserRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getFindUserMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.grpc.protoCompiled.Messaging.Group> findGroup(
+        com.grpc.protoCompiled.Messaging.FindGroupRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getFindGroupMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_JOIN = 0;
@@ -1118,6 +1256,8 @@ public final class ChatServiceGrpc {
   private static final int METHODID_GET_CONNECTED_CHANNEL = 12;
   private static final int METHODID_SET_STATUS = 13;
   private static final int METHODID_GET_STATUS = 14;
+  private static final int METHODID_FIND_USER = 15;
+  private static final int METHODID_FIND_GROUP = 16;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -1196,6 +1336,14 @@ public final class ChatServiceGrpc {
           serviceImpl.getStatus((com.grpc.protoCompiled.Messaging.User) request,
               (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.StatusResponse>) responseObserver);
           break;
+        case METHODID_FIND_USER:
+          serviceImpl.findUser((com.grpc.protoCompiled.Messaging.FindUserRequest) request,
+              (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.User>) responseObserver);
+          break;
+        case METHODID_FIND_GROUP:
+          serviceImpl.findGroup((com.grpc.protoCompiled.Messaging.FindGroupRequest) request,
+              (io.grpc.stub.StreamObserver<com.grpc.protoCompiled.Messaging.Group>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -1272,6 +1420,8 @@ public final class ChatServiceGrpc {
               .addMethod(getGetConnectedChannelMethod())
               .addMethod(getSetStatusMethod())
               .addMethod(getGetStatusMethod())
+              .addMethod(getFindUserMethod())
+              .addMethod(getFindGroupMethod())
               .build();
         }
       }

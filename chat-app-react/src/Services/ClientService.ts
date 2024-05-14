@@ -1,7 +1,7 @@
-import { ChannelChat, ChatMessage,Status, ConnectChannelRequest, DisconnectChannelRequest, Empty, Filter, JoinChannelRequest, ReceiveMessageRequest, SearchGroupRequest, SearchUserRequest, SendMessageRequest, SetStatusRequest, StopReceiveMessageRequest, User } from "../protoCompiled/chat-message_pb";
+import { ChannelChat, ChatMessage,Status, ConnectChannelRequest, DisconnectChannelRequest, Empty, Filter, JoinChannelRequest, ReceiveMessageRequest, SearchGroupRequest, SearchUserRequest, SendMessageRequest, SetStatusRequest, StopReceiveMessageRequest, User, FindUserRequest, FindGroupRequest } from "../protoCompiled/chat-message_pb";
 import { createMessage } from "./MessagesService";
 import { ChatServiceClient } from "../protoCompiled/Chat-serviceServiceClientPb";
-let Connection : ChatServiceClient | undefined = undefined;
+let Connection : ChatServiceClient | undefined = new ChatServiceClient('http://localhost:8000');
 
 export const startConnection = ()=> {
     if(Connection !== undefined) return;
@@ -119,15 +119,15 @@ export const sendMessage = async (user:User, channel:ChannelChat, content:string
     Request.setChannel(channel);
     Request.setMessage(message);
     const resp = await Connection!.sendMsg(Request);
-    console.log(resp);
     return resp;
 
 }
 
 
-export const ReceiveMessage = async (channel:ChannelChat) => {
+export const ReceiveMessage = async (channel:ChannelChat,receiver:User) => {
     const Request = new ReceiveMessageRequest();
     Request.setChannel(channel);
+    Request.setReceiver(receiver)
     const msgList = Connection!.receiveMsg(Request); 
     return msgList;
 }
@@ -160,6 +160,23 @@ export const setStatus = async (user : User , status : Status) => {
 
 export const getStatus = async (user : User) => {
     const resp = await Connection!.getStatus(user);
+    console.log(resp);
+    return resp;
+}
+
+
+export const findUserById = async (id:string) => {
+    const req = new FindUserRequest();
+    req.setId(id);
+    const resp = await Connection!.findUser(req);
+    console.log(resp);
+    return resp;
+}
+
+export const findGroupById = async(id:string) => {
+    const req = new FindGroupRequest();
+    req.setId(id);
+    const resp = await Connection!.findGroup(req);
     console.log(resp);
     return resp;
 }
