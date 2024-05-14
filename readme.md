@@ -7,6 +7,7 @@
 - docker
 - Envoy
 - Redis
+- -Java
 
 ## Prerequities 
 - Java JDK installed with minimum version 17 and maven build tool.
