@@ -15,6 +15,9 @@
 - Protoc installed in your PATH to compile frontend proto files
 
 ## Features 
+### To check the whole features you can check here. [LINK](https://https://github.com/hediske/ChatApp/blob/main/Messagery/Readme.md)
+
+## How it works
 - FrontEnd :
 The frontEnd was build using React. A create-react-app project to test and put in action the different fonctionnalities by consuming a Java backend Server . A simple and cool UI enhancing the experience of the User .
 Used grpc-web to compile  proto files into typescript files and create connection to the grpc based Java server and use the Rpc provided by the backend.The Application consists of a facade that allows the user to choose between *Chat Menu* , *Group Menu* or *User Menu* 
@@ -25,7 +28,7 @@ The Biggest part of the project was creating a stable and functionnal server bas
 For the Redis integration in the backend server , we used Lettuce instead of Jedis because lettuce allows Reactive communication and building non-blocking servers .The goal of using Redis and Grpc is to establish a fast and reliable and reactive communication in the application for limited number of users at the same time.
 We setted up also a logging and error handling mechanism for the server using Java Log4j2 to be able to monitor and debug the server.
 
-To check the whole features you can check here .
+
 
 ## how to Run 
 1- Start Envoy and Redis (need docker to be active first)
