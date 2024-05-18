@@ -7,7 +7,7 @@
 - docker
 - Envoy
 - Redis
-- -Java
+- Java
 
 ## Prerequities 
 - Java JDK installed with minimum version 17 and maven build tool.
@@ -49,6 +49,8 @@ cd ../chat-app-react
 npm install --force
 npm start
 ```
+# Demo
+https://github.com/hediske/ChatApp/assets/148924541/89bce51f-afa1-4f72-aa3e-f8018058e836
 
 # Future Enhancement
 We work on adding group features in The react app and why not secure the app by adding authentifcation ?
