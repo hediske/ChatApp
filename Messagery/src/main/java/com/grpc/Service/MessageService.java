@@ -2,8 +2,6 @@ package com.grpc.Service;
 
 import java.time.Instant;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import com.google.protobuf.Timestamp;
 import com.grpc.Exception.NonExistantException;
@@ -12,7 +10,6 @@ import com.grpc.protoCompiled.Messaging.ChannelChat;
 import com.grpc.protoCompiled.Messaging.ChatMessage;
 import com.grpc.protoCompiled.Messaging.User;
 
-import io.grpc.Channel;
 
 
 

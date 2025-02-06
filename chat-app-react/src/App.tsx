@@ -4,7 +4,7 @@
   import Chat from './Component/Chat';
   import { joinUser, startConnection } from './Services/ClientService';
   import { JoinResponse, User } from './protoCompiled/chat-message_pb';
-  import { Status } from './protoCompiled/chatPackage/Status';
+  import { Status } from './protoCompiled/chat/grpc/Status';
   import LoadingScreen from './Component/LoadingScreen';
 import CustomModal from './Component/CustomModal';
 

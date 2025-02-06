@@ -354,12 +354,12 @@ public class ChatClientJava {
         ChatClientJava javaClient = new ChatClientJava("0.0.0.0", 8080); //connect to localhost
         Generator generator = new Generator();
         try{
-            // User user1 = generator.newUser();
-            // User user2 = generator.newUser();
-            // javaClient.join(user1);
-            // javaClient.join(user2);
-            // ChannelChat channel = javaClient.joinChannel(user2, user1);
-            // javaClient.receiveMsg(user2, channel);
+            User user1 = generator.newUser();
+            User user2 = generator.newUser();
+            javaClient.join(user1);
+            javaClient.join(user2);
+            ChannelChat channel = javaClient.joinChannel(user2, user1);
+            javaClient.receiveMsg(user2, channel);
             // Thread.sleep(200);
             // javaClient.sendMessage(user1, channel, "1");
             // javaClient.sendMessage(user1, channel, "2");
@@ -371,9 +371,12 @@ public class ChatClientJava {
             // Thread.sleep(1000);
             // javaClient.stopReceiveMsg(user2, channel);
             // javaClient.stopReceiveMsg(user1, channel);
-            javaClient.getUsers();
-            javaClient.findUser(Filter.newBuilder().setName("Wsuq").build());
+            // javaClient.getUsers();
+            // javaClient.findUser(Filter.newBuilder().setName("Wsuq").build());
 
+        }
+        catch(Exception e){
+            logger.log(Level.SEVERE,"Error in the request ", e.getMessage());
         }
         finally{
             javaClient.shutdown();

@@ -20,6 +20,8 @@ export const joinUser = async (user:User) => {
         return resp;
     }
     catch(error : any){ 
+        console.log(error)
+
         //adding a mechanism to help the higher level know the type of the error and take action
         switch(error.code) {
             case 2 : 

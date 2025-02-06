@@ -45,6 +45,7 @@ java -cp target/messaging-1.0-jar-with-dependencies.jar com/grpc/Service/Server/
 3- starting the React server
 ```
 cd ../chat-app-react
+sudo apt install protobuf-compiler
 ./proto-gen.sh  (run a script for proto files compile)
 npm install --force
 npm start

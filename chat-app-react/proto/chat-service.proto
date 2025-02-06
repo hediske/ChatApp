@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package chat.grpc;
 
-import "google/protobuf/timestamp.proto";
 // import "proto/chat-message.proto";
 import "chat-message.proto";
 
