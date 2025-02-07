@@ -51,8 +51,8 @@ npm install --force
 npm start
 ```
 # Demo
-https://github.com/hediske/ChatApp/assets/148924541/89bce51f-afa1-4f72-aa3e-f8018058e836
-
+![alt text](ezgif-667ba5d3fae75.gif)
+![alt text](ezgif-8d4cee2a77d8f.gif)
 # Future Enhancement
 We work on adding group features in The react app and why not secure the app by adding authentifcation ?
 

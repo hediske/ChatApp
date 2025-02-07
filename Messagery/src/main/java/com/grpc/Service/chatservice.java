@@ -351,7 +351,7 @@ public class chatservice extends ChatServiceImplBase {
                 this.messageService.ReceiveMessage(receiver, channel, new ChatStream<ChatMessage>() {
                     @Override
                     public void send(ChatMessage message){
-                        logger.info("👎🏽message received  :");
+                        logger.info("👎🏽message received  :"+message.getMsg());
                         responseObserver.onNext(message);
                     }
                 }
